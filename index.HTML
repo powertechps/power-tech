@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر المكونات الإلكترونية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 1rem 0;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: #004d99 !important;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand img {
+            height: 45px;
+            margin-left: 12px;
+        }
+        .nav-link {
+            font-weight: 600;
+            color: #555 !important;
+            transition: color 0.3s ease;
+            margin: 0 10px;
+            font-size: 1.05rem;
+        }
+        .nav-link:hover {
+            color: #007bff !important;
+        }
+
+        /* Floating Cart Icon */
+        .floating-cart {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1050;
+        }
+        .floating-cart a {
+            background-color: #e81e63;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .floating-cart a:hover {
+            transform: scale(1.1);
+        }
+        .floating-cart i {
+            font-size: 1.8rem;
+        }
+        .cart-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #004d99;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #005a9c 0%, #007bff 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            border-radius: 0 0 80px 80px;
+            margin-bottom: 60px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .hero-section p {
+            font-size: 1.7rem;
+            opacity: 0.9;
+        }
+        .hero-section .btn {
+            background-color: #28a745;
+            border-color: #28a745;
+            font-size: 1.3rem;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        .hero-section .btn:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Main Categories Grid */
+        .main-categories-grid {
+            padding: 50px 0;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            margin-bottom: 50px;
+        }
+        .main-categories-grid h2 {
+            color: #002c52;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+        .main-category-card {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        .main-category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .main-category-card i {
+            font-size: 4rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .main-category-card h3 {
+            font-size: 1.8rem;
+            color: #0056b3;
+            margin-bottom: 15px;
+        }
+        .main-category-card p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* Sub-Categories Section (Hidden by default) */
+        .sub-categories-section {
+            padding: 50px 0;
+            background-color: #ffffff;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            display: none;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .sub-categories-section h2 {
+            color: #002c52;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+        .category-card {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-card img {
+            max-width: 100%;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        .category-card h4 {
+            font-size: 1.5rem;
+            color: #0056b3;
+            margin-bottom: 15px;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background: linear-gradient(90deg, #0056b3 0%, #007bff 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 50px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        .cta-section .btn {
+            background-color: #28a745;
+            border-color: #28a745;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+        }
+        .cta-section .btn:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0;
+            font-size: 0.95rem;
+        }
+        .main-footer h5 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .main-footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        .main-footer a {
+            color: #ccc;
+            transition: color 0.3s ease;
+        }
+        .main-footer a:hover {
+            color: #007bff;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                height: 35px;
+            }
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+            .hero-section p {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://i.postimg.cc/y8X7g47D/your-logo.png" alt="Store Logo">
+                Power Tech
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="showElectronicsNavBtn">الإلكترونيات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pcb-requests.html">طلبات الـ PCB</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tools.html">المعدات والأدوات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="educational-kits.html">الحقائب التعليمية</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="floating-cart">
+        <a href="cart.html">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge" id="cart-count">0</span>
+        </a>
+    </div>
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <h1>اكتشف عالم الإلكترونيات معنا!</h1>
+                <p>متجرك المتكامل للمكونات، المعدات، والخدمات الإلكترونية.</p>
+                <a href="#main-sections" class="btn btn-success">ابدأ رحلتك الآن <i class="fas fa-arrow-down me-2"></i></a>
+            </div>
+        </section>
+
+        <section id="main-sections" class="main-categories-grid">
+            <div class="container">
+                <h2>استكشف أقسامنا الرئيسية</h2>
+                <div class="row d-flex align-items-stretch">
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="main-category-card">
+                            <i class="fas fa-microchip"></i>
+                            <h3>الإلكترونيات</h3>
+                            <p>مكونات وقطع إلكترونية متنوعة.</p>
+                            <button id="showElectronicsBtn" class="btn btn-primary">تصفح الفئات</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="main-category-card">
+                            <i class="fas fa-cogs"></i>
+                            <h3>طلبات الـ PCB</h3>
+                            <p>خدمات تصميم وطباعة لوحات الدوائر المطبوعة.</p>
+                            <a href="pcb-requests.html" class="btn btn-primary">اطلب الآن</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="main-category-card">
+                            <i class="fas fa-tools"></i>
+                            <h3>المعدات والأدوات</h3>
+                            <p>أدوات ومعدات ضرورية لمشاريعك.</p>
+                            <a href="tools.html" class="btn btn-primary">عرض المعدات</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="main-category-card">
+                            <i class="fas fa-book-open"></i>
+                            <h3>الحقائب التعليمية</h3>
+                            <p>مجموعات تعليمية للمبتدئين والمحترفين.</p>
+                            <a href="educational-kits.html" class="btn btn-primary">اكتشف الحقائب</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="electronics-sub-categories" class="sub-categories-section">
+            <div class="container">
+                <h2>فئات القطع الإلكترونية</h2>
+                <div class="row d-flex align-items-stretch">
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/tCQQMYX1/12957965.png" alt="Resistors">
+                            <h4>المقاومات</h4>
+                            <a href="resistors.html" class="btn btn-primary">عرض المقاومات</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/mZ6WN8nS/4860243.webp" alt="Capacitors">
+                            <h4>المكثفات</h4>
+                            <a href="capacitors.html" class="btn btn-primary">عرض المكثفات</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/YqGKXQKB/12957960.png" alt="Diodes">
+                            <h4>الدايودات</h4>
+                            <a href="diodes.html" class="btn btn-primary">عرض الدايودات</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/KzBQkcCV/illustration-of-transistor-vector-removebg-preview.png" alt="Transistors">
+                            <h4>الترانزستورات</h4>
+                            <a href="transistors.html" class="btn btn-primary">عرض الترانزستورات</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/Wb73h0Fq/relay.png" alt="Relays">
+                            <h4>الريليهات</h4>
+                            <a href="relays.html" class="btn btn-primary">عرض الريليهات</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/fLYq4QjT/microcontroller.png" alt="Microcontrollers">
+                            <h4>المتحكمات الدقيقة</h4>
+                            <a href="microcontrollers.html" class="btn btn-primary">عرض المتحكمات</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/44rGv2Gq/connectors.png" alt="Connectors">
+                            <h4>الموصلات</h4>
+                            <a href="connectors.html" class="btn btn-primary">عرض الموصلات</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/PJHymsjq/362-3626977-d13003-transistor-hd-png-download-removebg-preview.png" alt="Voltage Regulators">
+                            <h4>منظمات الجهد</h4>
+                            <a href="voltage-regulators.html" class="btn btn-primary">عرض منظمات الجهد</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="category-card">
+                            <img src="https://i.postimg.cc/FKvMsqfh/5789697.png" alt="Integrated Circuits">
+                            <h4>الدوائر المتكاملة</h4>
+                            <a href="ics.html" class="btn btn-primary">عرض الدوائر المتكاملة</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>جاهز لبدء مشروعك القادم؟</h2>
+                <p>تواصل معنا للحصول على استشارة أو طلب خاص.</p>
+                <a href="https://wa.me/970567900922?text=مرحباً، أود الاستفسار عن المكونات الإلكترونية." class="btn btn-light" target="_blank">تواصل عبر واتساب <i class="fab fa-whatsapp me-2"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>عنا</h5>
+                    <p>متجرك المتكامل للمكونات الإلكترونية عالية الجودة، نهدف إلى تزويد المهندسين، الطلاب، والمحترفين بكل ما يلزم لمشاريعهم.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>روابط سريعة</h5>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="pcb-requests.html">طلبات الـ PCB</a></li>
+                        <li><a href="tools.html">المعدات والأدوات</a></li>
+                        <li><a href="educational-kits.html">الحقائب التعليمية</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@yourstore.com</p>
+                    <p><i class="fas fa-phone-alt me-2"></i> +970 567 900 922</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Power Tech. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const electronicsSubCategoriesSection = document.getElementById('electronics-sub-categories');
+            const showElectronicsBtn = document.getElementById('showElectronicsBtn');
+            const showElectronicsNavBtn = document.getElementById('showElectronicsNavBtn');
+
+            function toggleElectronicsSection(e) {
+                e.preventDefault();
+                const isHidden = electronicsSubCategoriesSection.style.display === 'none' || electronicsSubCategoriesSection.style.display === '';
+                if (isHidden) {
+                    electronicsSubCategoriesSection.style.display = 'block';
+                    electronicsSubCategoriesSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                } else {
+                    electronicsSubCategoriesSection.style.display = 'none';
+                }
+            }
+
+            showElectronicsBtn.addEventListener('click', toggleElectronicsSection);
+            showElectronicsNavBtn.addEventListener('click', toggleElectronicsSection);
+            
+            document.querySelector('a[href="#main-sections"]').addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+
+            function updateCartCount() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const cartCount = document.getElementById('cart-count');
+                if (cartCount) {
+                    cartCount.textContent = cart.length;
+                }
+            }
+            updateCartCount();
+
+            window.addEventListener('storage', updateCartCount);
+        });
+    </script>
+</body>
+</html>
