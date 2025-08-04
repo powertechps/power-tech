@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر المكونات الإلكترونية</title>
+    <title>متجر Power Tech</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General Styles */
+        /* General Styles & Animations */
         body {
             font-family: 'Cairo', sans-serif;
             direction: rtl;
@@ -16,16 +16,33 @@
             color: #333;
             line-height: 1.6;
         }
+
         .container {
             max-width: 1200px;
         }
 
-        /* Navbar */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navbar - Improved */
         .navbar {
             background-color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
+
         .navbar-brand {
             font-weight: 700;
             color: #004d99 !important;
@@ -33,57 +50,80 @@
             display: flex;
             align-items: center;
         }
+
         .navbar-brand img {
             height: 45px;
             margin-left: 12px;
+            transition: transform 0.3s ease;
         }
+
+        .navbar-brand:hover img {
+            transform: scale(1.1);
+        }
+
         .nav-link {
             font-weight: 600;
             color: #555 !important;
             transition: color 0.3s ease;
             margin: 0 10px;
             font-size: 1.05rem;
+            position: relative;
         }
+
         .nav-link:hover {
             color: #007bff !important;
         }
 
-        /* Floating Cart Icon */
-        .floating-cart {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 1050;
-        }
-        .floating-cart a {
-            background-color: #e81e63;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-        .floating-cart a:hover {
-            transform: scale(1.1);
-        }
-        .floating-cart i {
-            font-size: 1.8rem;
-        }
-        .cart-badge {
+        .nav-link::after {
+            content: '';
             position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #004d99;
-            color: white;
-            font-size: 0.8rem;
-            font-weight: bold;
-            padding: 3px 8px;
-            border-radius: 50%;
-            border: 2px solid white;
+            bottom: -5px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 0;
+            height: 3px;
+            background-color: #007bff;
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-nav .nav-item .nav-link.active {
+            color: #007bff !important;
+        }
+
+        .navbar-nav .nav-item .nav-link.active::after {
+            width: 100%;
+        }
+
+        .search-form {
+            position: relative;
+            margin-right: 1rem;
+        }
+
+        .search-form input {
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            padding-left: 40px;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+
+        .search-form input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+            border-color: #007bff;
+        }
+
+        .search-form .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
         }
 
         /* Hero Section */
@@ -98,16 +138,19 @@
             position: relative;
             overflow: hidden;
         }
+
         .hero-section h1 {
             font-size: 4rem;
             font-weight: 700;
             color: white;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
+
         .hero-section p {
             font-size: 1.7rem;
             opacity: 0.9;
         }
+
         .hero-section .btn {
             background-color: #28a745;
             border-color: #28a745;
@@ -116,11 +159,12 @@
             border-radius: 30px;
             transition: all 0.3s ease;
         }
+
         .hero-section .btn:hover {
             background-color: #218838;
             border-color: #1e7e34;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         /* Main Categories Grid */
@@ -131,12 +175,14 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
             margin-bottom: 50px;
         }
+
         .main-categories-grid h2 {
             color: #002c52;
             text-align: center;
             font-weight: 700;
             margin-bottom: 50px;
         }
+
         .main-category-card {
             background-color: #f8f9fa;
             border-radius: 15px;
@@ -147,20 +193,24 @@
             text-align: center;
             border: 1px solid #e9ecef;
         }
+
         .main-category-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
+
         .main-category-card i {
             font-size: 4rem;
             color: #007bff;
             margin-bottom: 20px;
         }
+
         .main-category-card h3 {
             font-size: 1.8rem;
             color: #0056b3;
             margin-bottom: 15px;
         }
+
         .main-category-card p {
             font-size: 1.1rem;
             color: #666;
@@ -176,12 +226,14 @@
             display: none;
             animation: fadeIn 0.8s ease-out forwards;
         }
+
         .sub-categories-section h2 {
             color: #002c52;
             text-align: center;
             font-weight: 700;
             margin-bottom: 50px;
         }
+
         .category-card {
             background-color: #f8f9fa;
             border-radius: 15px;
@@ -192,20 +244,203 @@
             text-align: center;
             border: 1px solid #e9ecef;
         }
+
         .category-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
+
         .category-card img {
             max-width: 100%;
             height: 120px;
             object-fit: contain;
             margin-bottom: 20px;
         }
+
         .category-card h4 {
             font-size: 1.5rem;
             color: #0056b3;
             margin-bottom: 15px;
+        }
+
+        /* Floating Cart Icon - New Design */
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1050;
+            background-color: #e81e63;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .floating-cart-btn:hover {
+            transform: scale(1.1);
+            background-color: #d31a54;
+        }
+
+        .floating-cart-btn i {
+            font-size: 1.8rem;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #004d99;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Cart Sidebar - New Unified Cart */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 350px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1051;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .cart-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1050;
+        }
+
+        .cart-header {
+            background-color: #004d99;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h5 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .cart-header .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items-list {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-details h6 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .cart-item-details p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cart-item-controls button {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 5px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .cart-item-controls button:hover {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .cart-item-controls span {
+            font-weight: 700;
+            width: 30px;
+            text-align: center;
+        }
+
+        .cart-summary {
+            padding: 20px;
+            border-top: 2px solid #004d99;
+        }
+
+        .cart-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: right;
+            margin-bottom: 15px;
+        }
+
+        .checkout-btn {
+            background-color: #007bff;
+            border-radius: 15px;
         }
 
         /* Call to Action Section */
@@ -218,6 +453,7 @@
             margin-top: 50px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
+
         .cta-section .btn {
             background-color: #28a745;
             border-color: #28a745;
@@ -225,6 +461,7 @@
             font-size: 1.1rem;
             border-radius: 25px;
         }
+
         .cta-section .btn:hover {
             background-color: #218838;
             border-color: #1e7e34;
@@ -237,49 +474,99 @@
             padding: 40px 0;
             font-size: 0.95rem;
         }
+
         .main-footer h5 {
             color: #007bff;
             margin-bottom: 20px;
             font-size: 1.2rem;
         }
+
         .main-footer ul {
             list-style: none;
             padding: 0;
         }
+
         .main-footer a {
             color: #ccc;
             transition: color 0.3s ease;
+            text-decoration: none;
         }
+
         .main-footer a:hover {
             color: #007bff;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .social-icons a {
+            color: white;
+            margin-left: 10px;
+            font-size: 1.5rem;
+        }
+
+        .social-icons a:hover {
+            color: #007bff;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            margin-top: 20px;
         }
 
         /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .navbar-nav {
+                margin-top: 10px;
+            }
+
+            .search-form {
+                margin: 10px 0;
+            }
+        }
+
         @media (max-width: 768px) {
-            .navbar-brand img {
-                height: 35px;
+            .hero-section {
+                padding: 60px 0;
             }
+
             .hero-section h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
+
             .hero-section p {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
+            }
+
+            .floating-cart-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .floating-cart-btn i {
+                font-size: 1.5rem;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+            }
+
+            .sub-categories-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .main-categories-grid h2 {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="https://i.postimg.cc/y8X7g47D/your-logo.png" alt="Store Logo">
+                <img src="https://i.postimg.cc/3wjtG4cj/power-tech-logo.png" alt="Power Tech Logo">
                 Power Tech
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -288,7 +575,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">الرئيسية</a>
+                        <a class="nav-link active" href="index.html">الرئيسية</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="showElectronicsNavBtn">الإلكترونيات</a>
@@ -303,16 +590,39 @@
                         <a class="nav-link" href="educational-kits.html">الحقائب التعليمية</a>
                     </li>
                 </ul>
+                <form class="d-flex search-form" role="search">
+                    <input class="form-control" type="search" placeholder="ابحث عن منتج..." aria-label="Search">
+                    <i class="fas fa-search search-icon"></i>
+                </form>
             </div>
         </div>
     </nav>
 
-    <div class="floating-cart">
-        <a href="cart.html">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-badge" id="cart-count">0</span>
-        </a>
+    <button class="floating-cart-btn" id="open-cart-btn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cart-count">0</span>
+    </button>
+
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h5>سلة المشتريات</h5>
+            <button class="close-btn" id="close-cart-btn">&times;</button>
+        </div>
+        <div class="cart-items-list" id="cart-items-list">
+            </div>
+        <div class="cart-summary">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">المجموع الفرعي:</span>
+                <span class="fw-bold" id="subtotal">0.00 ر.س</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-4 cart-total">
+                <span>المجموع الكلي:</span>
+                <span id="total-price">0.00 ر.س</span>
+            </div>
+            <a href="checkout.html" class="btn btn-primary d-block w-100 checkout-btn">إتمام الطلب</a>
+        </div>
     </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
 
     <main>
         <section class="hero-section">
@@ -478,7 +788,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            // Data for a sample product to demonstrate adding to cart
+            const sampleProduct = {
+                id: 'resistor-1',
+                name: 'مقاومة 100 أوم',
+                price: 2.50,
+                image: 'https://i.postimg.cc/tCQQMYX1/12957965.png',
+                description: 'مقاومة كربونية عالية الجودة 100 أوم، 1/4 واط.'
+            };
+
             const electronicsSubCategoriesSection = document.getElementById('electronics-sub-categories');
             const showElectronicsBtn = document.getElementById('showElectronicsBtn');
             const showElectronicsNavBtn = document.getElementById('showElectronicsNavBtn');
@@ -499,7 +818,7 @@
 
             showElectronicsBtn.addEventListener('click', toggleElectronicsSection);
             showElectronicsNavBtn.addEventListener('click', toggleElectronicsSection);
-            
+
             document.querySelector('a[href="#main-sections"]').addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
@@ -507,16 +826,125 @@
                 });
             });
 
-            function updateCartCount() {
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
-                const cartCount = document.getElementById('cart-count');
-                if (cartCount) {
-                    cartCount.textContent = cart.length;
+            // Unified Cart Logic
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const cartOverlay = document.getElementById('cart-overlay');
+            const openCartBtn = document.getElementById('open-cart-btn');
+            const closeCartBtn = document.getElementById('close-cart-btn');
+            const cartCountElement = document.getElementById('cart-count');
+            const cartItemsList = document.getElementById('cart-items-list');
+            const totalPriceElement = document.getElementById('total-price');
+            const subtotalElement = document.getElementById('subtotal');
+
+            function getCart() {
+                return JSON.parse(localStorage.getItem('cart')) || [];
+            }
+
+            function saveCart(cart) {
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+
+            function updateCartDisplay() {
+                const cart = getCart();
+                cartCountElement.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+
+                cartItemsList.innerHTML = '';
+                let subtotal = 0;
+
+                if (cart.length === 0) {
+                    cartItemsList.innerHTML = '<p class="text-center text-muted">سلة التسوق فارغة.</p>';
+                } else {
+                    cart.forEach(item => {
+                        const cartItemElement = document.createElement('div');
+                        cartItemElement.classList.add('cart-item');
+                        cartItemElement.innerHTML = `
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                            <div class="cart-item-details">
+                                <h6>${item.name}</h6>
+                                <p>${item.price.toFixed(2)} ر.س</p>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="btn-sm" data-id="${item.id}" data-action="decrease">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="btn-sm" data-id="${item.id}" data-action="increase">+</button>
+                                <button class="btn-sm btn-danger" data-id="${item.id}" data-action="remove">x</button>
+                            </div>
+                        `;
+                        cartItemsList.appendChild(cartItemElement);
+                        subtotal += item.price * item.quantity;
+                    });
+                }
+
+                subtotalElement.textContent = `${subtotal.toFixed(2)} ر.س`;
+                totalPriceElement.textContent = `${subtotal.toFixed(2)} ر.س`; // For this example, total is the same as subtotal
+            }
+
+            function handleCartAction(e) {
+                const target = e.target;
+                if (target.tagName === 'BUTTON' && target.hasAttribute('data-action')) {
+                    const id = target.getAttribute('data-id');
+                    const action = target.getAttribute('data-action');
+                    let cart = getCart();
+
+                    switch (action) {
+                        case 'increase':
+                            cart = cart.map(item => item.id === id ? { ...item,
+                                quantity: item.quantity + 1
+                            } : item);
+                            break;
+                        case 'decrease':
+                            cart = cart.map(item => {
+                                if (item.id === id) {
+                                    return { ...item,
+                                        quantity: item.quantity > 1 ? item.quantity - 1 : 1
+                                    };
+                                }
+                                return item;
+                            });
+                            break;
+                        case 'remove':
+                            cart = cart.filter(item => item.id !== id);
+                            break;
+                    }
+                    saveCart(cart);
+                    updateCartDisplay();
                 }
             }
-            updateCartCount();
 
-            window.addEventListener('storage', updateCartCount);
+            function toggleCartSidebar() {
+                cartSidebar.classList.toggle('open');
+                cartOverlay.style.display = cartSidebar.classList.contains('open') ? 'block' : 'none';
+            }
+
+            openCartBtn.addEventListener('click', toggleCartSidebar);
+            closeCartBtn.addEventListener('click', toggleCartSidebar);
+            cartOverlay.addEventListener('click', toggleCartSidebar);
+            cartItemsList.addEventListener('click', handleCartAction);
+
+            // Initial setup
+            updateCartDisplay();
+
+            // Add a sample button to demonstrate adding a product
+            // This would be attached to product cards in a real store
+            const addSampleProductBtn = document.createElement('button');
+            addSampleProductBtn.textContent = 'إضافة مقاومة لسلة التسوق (مثال)';
+            addSampleProductBtn.classList.add('btn', 'btn-info', 'w-100', 'mb-4');
+            addSampleProductBtn.onclick = function() {
+                let cart = getCart();
+                const existingItem = cart.find(item => item.id === sampleProduct.id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ ...sampleProduct,
+                        quantity: 1
+                    });
+                }
+                saveCart(cart);
+                updateCartDisplay();
+                toggleCartSidebar();
+            };
+            const mainSections = document.getElementById('main-sections');
+            mainSections.parentElement.insertBefore(addSampleProductBtn, mainSections);
         });
     </script>
 </body>
