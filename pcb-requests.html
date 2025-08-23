@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدمات تصميم وطباعة PCB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* CSS الخاص بصفحة PCB */
+        body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            background-color: #f8f9fa;
+        }
+        .main-header {
+            background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .main-header h1 {
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+        }
+        .main-header p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 15px;
+        }
+
+        .pcb-section {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #002c52;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #007bff;
+            border-radius: 2px;
+        }
+
+        .service-card {
+            background: #f0f4f7;
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .service-card i {
+            font-size: 4rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .service-card h4 {
+            font-size: 1.8rem;
+            color: #0056b3;
+            font-weight: 600;
+        }
+        .service-card p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        /* Form Styling */
+        .order-form {
+            background: #f0f4f7;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .order-form label {
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+            color: #333;
+        }
+        .order-form input, .order-form select, .order-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            transition: border-color 0.3s ease;
+        }
+        .order-form input:focus, .order-form select:focus, .order-form textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+        .order-form textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 25px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .faq-section {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+        .faq-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .faq-section li {
+            background-color: #f0f4f7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: background-color 0.3s ease;
+        }
+        .faq-section li:hover {
+            background-color: #e2eaf0;
+        }
+        .faq-section strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #0056b3;
+        }
+        .faq-section p {
+            margin: 0;
+            color: #555;
+        }
+        
+        .privacy-alert {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #bee5eb;
+            margin-top: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Footer from main page (for consistency) */
+        .main-footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0;
+            font-size: 0.95rem;
+            margin-top: 50px;
+        }
+        .main-footer h5 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .main-footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        .main-footer ul li {
+            margin-bottom: 10px;
+        }
+        .main-footer ul li a {
+            color: #ccc;
+            transition: color 0.3s ease;
+        }
+        .main-footer ul li a:hover {
+            color: #007bff;
+        }
+        .main-footer .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 15px;
+            transition: color 0.3s ease;
+        }
+        .main-footer .social-icons a:hover {
+            color: #007bff;
+        }
+        .main-footer .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .main-header h1 {
+                font-size: 2.5rem;
+            }
+            .main-header p {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .pcb-section, .faq-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <h1>خدمات تصميم وطباعة PCB</h1>
+            <p>حوّل أفكارك إلى لوحات دوائر مطبوعة احترافية.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="pcb-section">
+            <h2 class="section-title">اختر الخدمة المناسبة لك</h2>
+            <div class="row d-flex align-items-stretch">
+                <div class="col-md-4 mb-4">
+                    <div class="service-card">
+                        <i class="fas fa-drafting-compass"></i>
+                        <h4>تصميم فقط</h4>
+                        <p>اطلب تصميم لوحة PCB مخصصة من الصفر بناءً على فكرتك أو الدائرة التي لديك.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="service-card">
+                        <i class="fas fa-print"></i>
+                        <h4>طباعة فقط</h4>
+                        <p>إذا كان لديك ملف Gerber جاهز، يمكننا طباعته لك بأفضل جودة وسعر.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="service-card">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>تصميم وطباعة</h4>
+                        <p>خدمة متكاملة تشمل تصميم الدائرة بالكامل ثم طباعة اللوحة وإرسالها لك جاهزة للاستخدام.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="pcb-section">
+            <h2 class="section-title">أرسل لنا طلبك</h2>
+            <div class="order-form">
+                <label for="name">الاسم الكامل:</label>
+                <input type="text" id="name" placeholder="مثال: Power Tech">
+
+                <label for="phone">رقم الهاتف (واتساب):</label>
+                <input type="text" id="phone" placeholder="مثال: 059xxxxxxx">
+
+                <label for="email">البريد الإلكتروني (اختياري):</label>
+                <input type="email" id="email" placeholder="example@email.com">
+
+                <label for="service">نوع الخدمة:</label>
+                <select id="service">
+                    <option>تصميم فقط</option>
+                    <option>طباعة فقط</option>
+                    <option>تصميم وطباعة</option>
+                </select>
+
+                <label for="details">تفاصيل المشروع:</label>
+                <textarea id="details" rows="5" placeholder="أدخل التفاصيل مثل المقاسات، عدد الطبقات، نوع اللوحة، المكونات، أو أي ملاحظات أخرى."></textarea>
+
+                <label for="file">رابط الملفات (Drive, Dropbox, إلخ):</label>
+                <input type="text" id="file" placeholder="https://drive.google.com/... (مطلوب لخدمة الطباعة)">
+
+                <button class="submit-btn" onclick="sendOrder()">💬 إرسال الطلب عبر واتساب</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="faq-section">
+            <h2 class="section-title">أسئلة شائعة</h2>
+            <ul>
+                <li>
+                    <strong>ما نوع الملفات المطلوبة؟</strong>
+                    <p>لخدمة الطباعة: ملفات Gerber. ولخدمة التصميم: صور واضحة للدائرة، مخطط نظري، أو وصف تفصيلي للمطلوب.</p>
+                </li>
+                <li>
+                    <strong>كم تستغرق مدة التنفيذ؟</strong>
+                    <p>تختلف المدة حسب نوع الخدمة وتعقيد المشروع، وعادة ما تتراوح بين 2 إلى 5 أيام عمل.</p>
+                </li>
+                <li>
+                    <strong>هل الملفات آمنة وسرية؟</strong>
+                    <p>نعم، نضمن سرية تامة لجميع الملفات والتصاميم التي تزودنا بها. خصوصيتك هي أولويتنا.</p>
+                </li>
+            </ul>
+            <div class="privacy-alert">
+                <i class="fas fa-lock me-2"></i> جميع معلوماتك وملفاتك آمنة وسرية 100%.
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>عنا</h5>
+                    <p>متجرك المتكامل للمكونات الإلكترونية عالية الجودة، نهدف إلى تزويد المهندسين، الطلاب، والمحترفين بكل ما يلزم لمشاريعهم.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>روابط سريعة</h5>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="pcb-requests.html">طلبات الـ PCB</a></li>
+                        <li><a href="#">المدونة (قريباً)</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>تواصل معنا</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@yourstore.com</p>
+                    <p><i class="fas fa-phone-alt me-2"></i> +970 567 900 922</p>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 متجر المكونات الإلكترونية. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function sendOrder() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const service = document.getElementById('service').value;
+            const details = document.getElementById('details').value.trim();
+            const file = document.getElementById('file').value.trim();
+
+            if (!name || !phone || !details) {
+                alert("يرجى تعبئة الحقول المطلوبة: الاسم الكامل، رقم الهاتف، وتفاصيل المشروع.");
+                return;
+            }
+
+            let message = `مرحباً، أود طلب خدمة PCB:\n\n`;
+            message += `👤 الاسم: ${name}\n`;
+            message += `📱 الهاتف: ${phone}\n`;
+            if (email) message += `📧 الإيميل: ${email}\n`;
+            message += `🛠️ نوع الخدمة: ${service}\n\n`;
+            message += `📄 تفاصيل المشروع:\n${details}\n\n`;
+            if (file) message += `📎 رابط الملفات: ${file}`;
+
+            const whatsapp = "970568369951";
+            const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
